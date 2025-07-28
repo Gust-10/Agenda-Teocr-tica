@@ -1,7 +1,5 @@
-
 import React, { useEffect, useState, useCallback } from 'react';
 import Header from './components/Header';
-import UpcomingFocus from './components/UpcomingFocus';
 import ReminderForm from './components/ReminderForm';
 import ReminderList from './components/ReminderList';
 import NotificationPopup from './components/NotificationPopup';
@@ -72,7 +70,6 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-gray-900 text-gray-100 pb-10">
       <main className="max-w-2xl mx-auto">
         <Header installPrompt={installPrompt} handleInstallClick={handleInstallClick} />
-        <UpcomingFocus reminders={reminders} />
         <ReminderForm addReminder={addReminder} />
         <ReminderList reminders={reminders} deleteReminder={deleteReminder} />
       </main>
