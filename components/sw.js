@@ -1,8 +1,7 @@
 // sw.js
 
-const CACHE_NAME = 'agenda-teocraticas-cache-v9'; // Bump version to trigger update
+const CACHE_NAME = 'agenda-teocraticas-cache-v2'; // Bump version to trigger update
 
-// Files to cache are only the ones currently used in the project.
 const FILES_TO_CACHE = [
   '/',
   'index.html',
@@ -11,28 +10,30 @@ const FILES_TO_CACHE = [
   'index.tsx',
   'App.tsx',
   'types.ts',
+  'services/geminiService.ts',
   'hooks/useReminders.ts',
   'hooks/usePWAInstall.ts',
   'components/AnimatedLogo.tsx',
   'components/Header.tsx',
+  'components/MotivationalQuote.tsx',
   'components/NotificationPopup.tsx',
   'components/ReminderForm.tsx',
   'components/ReminderItem.tsx',
   'components/ReminderList.tsx',
+  'components/UpcomingFocus.tsx',
   'components/icons/BellIcon.tsx',
+  'components/icons/CalendarIcon.tsx',
   'components/icons/DownloadIcon.tsx',
   'components/icons/PlayIcon.tsx',
+  'components/icons/QuoteIcon.tsx',
   'components/icons/TrashIcon.tsx',
-  'components/icons/UploadIcon.tsx',
-  'components/icons/RepeatIcon.tsx',
-  'icon-192.png',
-  'icon-512.png',
-  'https://cdn.tailwindcss.com',
-  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
-  'https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3'
+  'components/icons/UploadIcon.tsx'
+  // NOTE: Icon files (icon-192.png, etc.) are not listed here but will be cached 
+  // by the fetch handler on first load.
 ];
 
 // Installs the service worker.
+// The service worker is installed when the user first visits the page or a new version is detected.
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
@@ -42,37 +43,43 @@ self.addEventListener('install', (event) => {
             });
         })
     );
-    self.skipWaiting();
 });
 
-// Stale-while-revalidate strategy for most assets
+// Estrategia "Stale-while-revalidate"
 self.addEventListener('fetch', (event) => {
     // Only handle GET requests
     if (event.request.method !== 'GET') {
         return;
     }
 
+    // For local files and CDN assets
     event.respondWith(
         caches.open(CACHE_NAME).then(async (cache) => {
             const cachedResponse = await cache.match(event.request);
             const networkResponsePromise = fetch(event.request).catch(() => {
-                // Fails if network is down, this is expected.
+                // Return a fallback if network fails and not in cache, though this should be rare for precached files.
+                // console.warn(`Fetch failed for: ${event.request.url}`);
             });
 
+            // "while-revalidate" part
             event.waitUntil(
                 networkResponsePromise.then((networkResponse) => {
+                     // Check if we received a valid response
                      if (networkResponse && networkResponse.status === 200) {
                         cache.put(event.request, networkResponse.clone());
                     }
+                }).catch(err => {
+                    // Network request failed, which is normal if offline.
                 })
             );
 
+            // Return cached response if available, otherwise wait for the network response
             return cachedResponse || networkResponsePromise;
         })
     );
 });
 
-// Clean up old caches during activation
+// Limpiar cachés antiguos durante la activación del nuevo Service Worker
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -84,6 +91,6 @@ self.addEventListener('activate', (event) => {
                     }
                 })
             );
-        }).then(() => self.clients.claim())
+        }).then(() => self.clients.claim()) // Take control of all pages immediately
     );
 });

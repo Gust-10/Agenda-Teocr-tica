@@ -1,17 +1,16 @@
-
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Reminder } from '../types';
 
 export const useReminders = () => {
   const [reminders, setReminders] = useState<Reminder[]>(() => {
     try {
       const savedReminders = localStorage.getItem('reminders');
+       // Migration for old reminders without a sound property
       if (savedReminders) {
         const parsed = JSON.parse(savedReminders);
         return parsed.map((r: any) => ({
           ...r,
           sound: r.sound || 'https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3', // default sound
-          repeatDays: r.repeatDays || [], // Ensure repeatDays exists
         }));
       }
       return [];
@@ -29,7 +28,7 @@ export const useReminders = () => {
     }
   }, [reminders]);
 
-  const addReminder = (text: string, dueDate: string, sound: string, repeatDays: number[]) => {
+  const addReminder = useCallback((text: string, dueDate: string, sound: string) => {
     if (!text.trim() || !dueDate) return;
     const newReminder: Reminder = {
       id: crypto.randomUUID(),
@@ -37,33 +36,22 @@ export const useReminders = () => {
       dueDate,
       sound,
       notified: { week: false, threeDays: false, oneDay: false },
-      repeatDays,
     };
     setReminders(prev => [...prev, newReminder].sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()));
-  };
+  }, []);
 
-  const deleteReminder = (id: string) => {
+  const deleteReminder = useCallback((id: string) => {
     setReminders(prev => prev.filter(r => r.id !== id));
-  };
+  }, []);
 
-  const updateReminderNotified = (id: string, type: 'week' | 'threeDays' | 'oneDay') => {
+  const updateReminderNotified = useCallback((id: string, type: 'week' | 'threeDays' | 'oneDay') => {
     setReminders(prev => prev.map(r => {
       if (r.id === id) {
         return { ...r, notified: { ...r.notified, [type]: true } };
       }
       return r;
     }));
-  };
+  }, []);
 
-  const updateReminderLastNotified = (id: string, date: string) => {
-    setReminders(prev => prev.map(r => {
-        if (r.id === id) {
-            return { ...r, lastNotifiedDate: date };
-        }
-        return r;
-    }));
-  };
-
-
-  return { reminders, addReminder, deleteReminder, updateReminderNotified, updateReminderLastNotified };
+  return { reminders, addReminder, deleteReminder, updateReminderNotified };
 };

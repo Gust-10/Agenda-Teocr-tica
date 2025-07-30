@@ -9,8 +9,6 @@ export interface Reminder {
     threeDays: boolean;
     oneDay: boolean;
   };
-  repeatDays?: number[]; // Optional: 0=Sun, 1=Mon, ..., 6=Sat
-  lastNotifiedDate?: string; // Optional: ISO string for the date of the last notification for repeating reminders
 }
 
 export interface Notification {

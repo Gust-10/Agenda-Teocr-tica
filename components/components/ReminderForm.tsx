@@ -1,10 +1,9 @@
-
 import React, { useState, useRef } from 'react';
 import PlayIcon from './icons/PlayIcon';
 import UploadIcon from './icons/UploadIcon';
 
 interface ReminderFormProps {
-  addReminder: (text: string, dueDate: string, sound: string, repeatDays: number[]) => void;
+  addReminder: (text: string, dueDate: string, sound: string) => void;
 }
 
 const SOUND_OPTIONS = [
@@ -14,19 +13,11 @@ const SOUND_OPTIONS = [
   { name: 'Alarma Digital', url: 'https://cdn.freesound.org/previews/198/198841_3799655-lq.mp3' },
 ];
 
-const WEEK_DAYS = [
-    { label: 'L', value: 1 }, { label: 'M', value: 2 }, { label: 'MI', value: 3 },
-    { label: 'J', value: 4 }, { label: 'V', value: 5 }, { label: 'S', value: 6 },
-    { label: 'D', value: 0 }
-];
-
-
 const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
   const [text, setText] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [customSounds, setCustomSounds] = useState<{ name: string; url: string; }[]>([]);
   const [selectedSound, setSelectedSound] = useState(SOUND_OPTIONS[0].url);
-  const [repeatDays, setRepeatDays] = useState<number[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,6 +36,7 @@ const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
       const newCustomSound = { name: file.name, url: dataUrl };
       
       setCustomSounds(prev => {
+        // Avoid adding duplicates if the same file is selected again
         if (prev.some(s => s.url === newCustomSound.url)) return prev;
         return [...prev, newCustomSound];
       });
@@ -63,21 +55,12 @@ const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
     audioRef.current.play().catch(e => console.error("Error playing sound preview:", e));
   };
 
-  const toggleRepeatDay = (dayValue: number) => {
-    setRepeatDays(prev => 
-        prev.includes(dayValue) 
-        ? prev.filter(d => d !== dayValue)
-        : [...prev, dayValue]
-    );
-  }
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (text.trim() && dueDate) {
-      addReminder(text, dueDate, selectedSound, repeatDays);
+      addReminder(text, dueDate, selectedSound);
       setText('');
       setDueDate('');
-      setRepeatDays([]);
     }
   };
 
@@ -102,32 +85,11 @@ const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
           min={today}
           onChange={(e) => setDueDate(e.target.value)}
           className="w-full px-4 py-2 bg-gray-700 border border-gray-600 text-white rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-          aria-label="Fecha de vencimiento o inicio"
+          aria-label="Fecha de vencimiento"
         />
         
         <div>
-           <h3 className="text-md font-medium text-white mb-2">Repetir semanalmente</h3>
-           <div className="flex justify-between items-center space-x-1">
-                {WEEK_DAYS.map(day => (
-                    <button
-                        type="button"
-                        key={day.value}
-                        onClick={() => toggleRepeatDay(day.value)}
-                        className={`w-9 h-9 flex items-center justify-center font-bold text-sm rounded-full transition-colors duration-200 ${
-                            repeatDays.includes(day.value) 
-                            ? 'bg-indigo-600 text-white' 
-                            : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                        }`}
-                        aria-pressed={repeatDays.includes(day.value)}
-                    >
-                        {day.label}
-                    </button>
-                ))}
-           </div>
-        </div>
-
-        <div>
-          <h3 className="text-md font-medium text-white mb-2 mt-4">Sonido de Notificación</h3>
+          <h3 className="text-md font-medium text-white mb-2">Sonido de Notificación</h3>
           <div className="space-y-2">
             {allSoundOptions.map(option => (
               <div key={option.url} className="flex items-center justify-between bg-gray-700/50 p-2 rounded-md">
