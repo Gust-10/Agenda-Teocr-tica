@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import BellIcon from './icons/BellIcon';
 import type { Notification } from '../types';
@@ -22,7 +21,7 @@ const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onC
   if (!notification) return null;
 
   return (
-    <div className="fixed top-5 right-5 w-auto max-w-sm bg-indigo-600 text-white p-4 rounded-lg shadow-2xl animate-fade-in-down z-50">
+    <div className="w-full max-w-sm bg-indigo-600 text-white p-4 rounded-lg shadow-2xl animate-fade-in-down">
       <div className="flex items-start">
         <div className="flex-shrink-0">
           <BellIcon className="h-6 w-6 text-white" />

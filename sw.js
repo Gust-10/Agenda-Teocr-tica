@@ -1,6 +1,6 @@
 // sw.js
 
-const CACHE_NAME = 'agenda-teocraticas-cache-v2'; // Bump version to trigger update
+const CACHE_NAME = 'agenda-teocraticas-cache-v5'; // Bump version to trigger update
 
 const FILES_TO_CACHE = [
   '/',
@@ -10,12 +10,10 @@ const FILES_TO_CACHE = [
   'index.tsx',
   'App.tsx',
   'types.ts',
-  'services/geminiService.ts',
   'hooks/useReminders.ts',
   'hooks/usePWAInstall.ts',
   'components/AnimatedLogo.tsx',
   'components/Header.tsx',
-  'components/MotivationalQuote.tsx',
   'components/NotificationPopup.tsx',
   'components/ReminderForm.tsx',
   'components/ReminderItem.tsx',
@@ -25,7 +23,6 @@ const FILES_TO_CACHE = [
   'components/icons/CalendarIcon.tsx',
   'components/icons/DownloadIcon.tsx',
   'components/icons/PlayIcon.tsx',
-  'components/icons/QuoteIcon.tsx',
   'components/icons/TrashIcon.tsx',
   'components/icons/UploadIcon.tsx'
   // NOTE: Icon files (icon-192.png, etc.) are not listed here but will be cached 
