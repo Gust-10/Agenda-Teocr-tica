@@ -1,6 +1,6 @@
 // sw.js
 
-const CACHE_NAME = 'agenda-teocraticas-cache-v5'; // Bump version to trigger update
+const CACHE_NAME = 'agenda-teocraticas-cache-v6'; // Bump version to trigger update
 
 const FILES_TO_CACHE = [
   '/',
