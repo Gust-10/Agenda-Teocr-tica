@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import BellIcon from './icons/BellIcon';
-import type { Notification } from '../types';
+import BellIcon from './icons/BellIcon.jsx';
+import type { Notification } from '../types.js';
 
 interface NotificationPopupProps {
   notification: Notification | null;

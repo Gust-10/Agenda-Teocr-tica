@@ -1,7 +1,7 @@
 
 import React from 'react';
-import type { Reminder } from '../types';
-import TrashIcon from './icons/TrashIcon';
+import type { Reminder } from '../types.js';
+import TrashIcon from './icons/TrashIcon.jsx';
 
 interface ReminderItemProps {
   reminder: Reminder;

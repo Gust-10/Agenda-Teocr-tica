@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import type { BeforeInstallPromptEvent } from '../types';
+import type { BeforeInstallPromptEvent } from '../types.js';
 
 export const usePWAInstall = () => {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);

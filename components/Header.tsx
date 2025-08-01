@@ -1,8 +1,8 @@
 
 import React from 'react';
-import AnimatedLogo from './AnimatedLogo';
-import DownloadIcon from './icons/DownloadIcon';
-import type { BeforeInstallPromptEvent } from '../types';
+import AnimatedLogo from './AnimatedLogo.jsx';
+import DownloadIcon from './icons/DownloadIcon.jsx';
+import type { BeforeInstallPromptEvent } from '../types.js';
 
 interface HeaderProps {
   installPrompt: BeforeInstallPromptEvent | null;

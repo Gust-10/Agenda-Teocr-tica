@@ -1,17 +1,29 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { Reminder } from '../types';
+import type { Reminder } from '../types.js';
 
 export const useReminders = () => {
   const [reminders, setReminders] = useState<Reminder[]>(() => {
     try {
       const savedReminders = localStorage.getItem('reminders');
-       // Migration for old reminders without a sound property
       if (savedReminders) {
         const parsed = JSON.parse(savedReminders);
-        return parsed.map((r: any) => ({
-          ...r,
-          sound: r.sound || 'https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3', // default sound
-        }));
+        if (Array.isArray(parsed)) {
+          // Robust migration for old reminders. Ensures all properties exist to prevent crashes.
+          const migratedReminders = parsed.map((r: any) => ({
+            id: r.id || crypto.randomUUID(),
+            text: r.text || '',
+            dueDate: r.dueDate || '',
+            sound: r.sound || 'https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3',
+            notified: {
+              week: r.notified?.week || false,
+              threeDays: r.notified?.threeDays || false,
+              oneDay: r.notified?.oneDay || false,
+            },
+          })).filter(r => r.text && r.dueDate); // Filter out any malformed reminders
+
+          // Sort reminders after migration
+          return migratedReminders.sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime());
+        }
       }
       return [];
     } catch (error) {

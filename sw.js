@@ -1,32 +1,32 @@
 // sw.js
 
-const CACHE_NAME = 'agenda-teocraticas-cache-v6'; // Bump version to trigger update
+const CACHE_NAME = 'agenda-teocraticas-cache-v7'; // Bump version to trigger update
 
 const FILES_TO_CACHE = [
   '/',
   'index.html',
   'manifest.json',
   'register-sw.js',
-  'index.tsx',
-  'App.tsx',
-  'types.ts',
-  'hooks/useReminders.ts',
-  'hooks/usePWAInstall.ts',
-  'components/AnimatedLogo.tsx',
-  'components/Header.tsx',
-  'components/NotificationPopup.tsx',
-  'components/ReminderForm.tsx',
-  'components/ReminderItem.tsx',
-  'components/ReminderList.tsx',
-  'components/UpcomingFocus.tsx',
-  'components/icons/BellIcon.tsx',
-  'components/icons/CalendarIcon.tsx',
-  'components/icons/DownloadIcon.tsx',
-  'components/icons/PlayIcon.tsx',
-  'components/icons/TrashIcon.tsx',
-  'components/icons/UploadIcon.tsx'
-  // NOTE: Icon files (icon-192.png, etc.) are not listed here but will be cached 
-  // by the fetch handler on first load.
+  'icon.svg',
+  'index.jsx',
+  'App.jsx',
+  'types.js',
+  'hooks/useReminders.js',
+  'hooks/usePWAInstall.js',
+  'components/AnimatedLogo.jsx',
+  'components/Header.jsx',
+  'components/NotificationPopup.jsx',
+  'components/ReminderForm.jsx',
+  'components/ReminderItem.jsx',
+  'components/ReminderList.jsx',
+  'components/UpcomingFocus.jsx',
+  'components/icons/BellIcon.jsx',
+  'components/icons/CalendarIcon.jsx',
+  'components/icons/DownloadIcon.jsx',
+  'components/icons/PlayIcon.jsx',
+  'components/icons/QuoteIcon.jsx',
+  'components/icons/TrashIcon.jsx',
+  'components/icons/UploadIcon.jsx'
 ];
 
 // Installs the service worker.

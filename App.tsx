@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import Header from './components/Header';
-import ReminderForm from './components/ReminderForm';
-import ReminderList from './components/ReminderList';
-import NotificationPopup from './components/NotificationPopup';
-import UpcomingFocus from './components/UpcomingFocus';
-import { useReminders } from './hooks/useReminders';
-import { usePWAInstall } from './hooks/usePWAInstall';
-import type { Notification } from './types';
+import Header from './components/Header.jsx';
+import ReminderForm from './components/ReminderForm.jsx';
+import ReminderList from './components/ReminderList.jsx';
+import NotificationPopup from './components/NotificationPopup.jsx';
+import UpcomingFocus from './components/UpcomingFocus.jsx';
+import { useReminders } from './hooks/useReminders.js';
+import { usePWAInstall } from './hooks/usePWAInstall.js';
+import type { Notification } from './types.js';
 
 const App: React.FC = () => {
   const { reminders, addReminder, deleteReminder, updateReminderNotified } = useReminders();
@@ -63,13 +63,15 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-gray-900 text-gray-100 pb-10">
       <main className="max-w-2xl mx-auto">
         <Header installPrompt={installPrompt} handleInstallClick={handleInstallClick} />
-        <div className="my-6 space-y-6">
+
+        <div className="mt-6">
           <UpcomingFocus reminders={reminders} />
         </div>
+        
         <ReminderForm addReminder={addReminder} />
         <ReminderList reminders={reminders} deleteReminder={deleteReminder} />
       </main>
-      <div className="fixed top-5 right-5 z-50 flex flex-col space-y-3">
+      <div className="fixed top-5 right-5 z-50 flex flex-col space-y-3 w-full max-w-sm">
         {notifications.map(notification => (
           <NotificationPopup
             key={notification.id}

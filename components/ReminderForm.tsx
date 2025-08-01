@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
-import PlayIcon from './icons/PlayIcon';
-import UploadIcon from './icons/UploadIcon';
+import PlayIcon from './icons/PlayIcon.jsx';
+import UploadIcon from './icons/UploadIcon.jsx';
 
 interface ReminderFormProps {
   addReminder: (text: string, dueDate: string, sound: string) => void;

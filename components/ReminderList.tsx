@@ -1,7 +1,7 @@
 
 import React from 'react';
-import type { Reminder } from '../types';
-import ReminderItem from './ReminderItem';
+import type { Reminder } from '../types.js';
+import ReminderItem from './ReminderItem.jsx';
 
 interface ReminderListProps {
   reminders: Reminder[];
