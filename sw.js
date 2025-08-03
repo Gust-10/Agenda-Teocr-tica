@@ -1,6 +1,6 @@
 // sw.js
 
-const CACHE_NAME = 'agenda-teocraticas-cache-v9'; // Bump version to trigger update
+const CACHE_NAME = 'agenda-teocraticas-cache-v10'; // Bump version to trigger update
 
 const FILES_TO_CACHE = [
   '/',
@@ -8,24 +8,24 @@ const FILES_TO_CACHE = [
   'manifest.json',
   'register-sw.js',
   'icon.svg',
-  'index.jsx',
-  'App.jsx',
+  'index.js',
+  'App.js',
   'hooks/useReminders.js',
   'hooks/usePWAInstall.js',
-  'components/AnimatedLogo.jsx',
-  'components/Header.jsx',
-  'components/NotificationPopup.jsx',
-  'components/ReminderForm.jsx',
-  'components/ReminderItem.jsx',
-  'components/ReminderList.jsx',
-  'components/UpcomingFocus.jsx',
-  'components/icons/BellIcon.jsx',
-  'components/icons/CalendarIcon.jsx',
-  'components/icons/DownloadIcon.jsx',
-  'components/icons/PlayIcon.jsx',
-  'components/icons/QuoteIcon.jsx',
-  'components/icons/TrashIcon.jsx',
-  'components/icons/UploadIcon.jsx'
+  'components/AnimatedLogo.js',
+  'components/Header.js',
+  'components/NotificationPopup.js',
+  'components/ReminderForm.js',
+  'components/ReminderItem.js',
+  'components/ReminderList.js',
+  'components/UpcomingFocus.js',
+  'components/icons/BellIcon.js',
+  'components/icons/CalendarIcon.js',
+  'components/icons/DownloadIcon.js',
+  'components/icons/PlayIcon.js',
+  'components/icons/QuoteIcon.js',
+  'components/icons/TrashIcon.js',
+  'components/icons/UploadIcon.js'
 ];
 
 // Installs the service worker.
