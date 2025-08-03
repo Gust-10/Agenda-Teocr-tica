@@ -1,14 +1,7 @@
-
 import React from 'react';
-import type { Reminder } from '../types.js';
 import ReminderItem from './ReminderItem.jsx';
 
-interface ReminderListProps {
-  reminders: Reminder[];
-  deleteReminder: (id: string) => void;
-}
-
-const ReminderList: React.FC<ReminderListProps> = ({ reminders, deleteReminder }) => {
+const ReminderList = ({ reminders, deleteReminder }) => {
   return (
     <div className="p-4 mx-4 mt-6">
       <h2 className="text-xl font-bold text-white mb-4">Tus Recordatorios</h2>

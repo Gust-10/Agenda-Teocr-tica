@@ -1,15 +1,8 @@
-
 import React from 'react';
-import type { Reminder } from '../types.js';
 import TrashIcon from './icons/TrashIcon.jsx';
 
-interface ReminderItemProps {
-  reminder: Reminder;
-  deleteReminder: (id: string) => void;
-}
-
-const ReminderItem: React.FC<ReminderItemProps> = ({ reminder, deleteReminder }) => {
-  const formatDate = (dateString: string) => {
+const ReminderItem = ({ reminder, deleteReminder }) => {
+  const formatDate = (dateString) => {
     const date = new Date(dateString + 'T00:00:00'); // Ensure date is parsed in local timezone
     return date.toLocaleDateString('es-ES', {
       year: 'numeric',

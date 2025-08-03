@@ -1,6 +1,6 @@
 // sw.js
 
-const CACHE_NAME = 'agenda-teocraticas-cache-v7'; // Bump version to trigger update
+const CACHE_NAME = 'agenda-teocraticas-cache-v8'; // Bump version to trigger update
 
 const FILES_TO_CACHE = [
   '/',
@@ -10,7 +10,6 @@ const FILES_TO_CACHE = [
   'icon.svg',
   'index.jsx',
   'App.jsx',
-  'types.js',
   'hooks/useReminders.js',
   'hooks/usePWAInstall.js',
   'components/AnimatedLogo.jsx',

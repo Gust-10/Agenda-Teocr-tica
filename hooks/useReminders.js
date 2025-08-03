@@ -1,15 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
-import type { Reminder } from '../types.js';
 
 export const useReminders = () => {
-  const [reminders, setReminders] = useState<Reminder[]>(() => {
+  const [reminders, setReminders] = useState(() => {
     try {
       const savedReminders = localStorage.getItem('reminders');
       if (savedReminders) {
         const parsed = JSON.parse(savedReminders);
         if (Array.isArray(parsed)) {
           // Robust migration for old reminders. Ensures all properties exist to prevent crashes.
-          const migratedReminders = parsed.map((r: any) => ({
+          const migratedReminders = parsed.map((r) => ({
             id: r.id || crypto.randomUUID(),
             text: r.text || '',
             dueDate: r.dueDate || '',
@@ -40,9 +39,9 @@ export const useReminders = () => {
     }
   }, [reminders]);
 
-  const addReminder = useCallback((text: string, dueDate: string, sound: string) => {
+  const addReminder = useCallback((text, dueDate, sound) => {
     if (!text.trim() || !dueDate) return;
-    const newReminder: Reminder = {
+    const newReminder = {
       id: crypto.randomUUID(),
       text: text.trim(),
       dueDate,
@@ -52,11 +51,11 @@ export const useReminders = () => {
     setReminders(prev => [...prev, newReminder].sort((a, b) => new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()));
   }, []);
 
-  const deleteReminder = useCallback((id: string) => {
+  const deleteReminder = useCallback((id) => {
     setReminders(prev => prev.filter(r => r.id !== id));
   }, []);
 
-  const updateReminderNotified = useCallback((id: string, type: 'week' | 'threeDays' | 'oneDay') => {
+  const updateReminderNotified = useCallback((id, type) => {
     setReminders(prev => prev.map(r => {
       if (r.id === id) {
         return { ...r, notified: { ...r.notified, [type]: true } };

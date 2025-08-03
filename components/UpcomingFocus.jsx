@@ -1,15 +1,10 @@
 import React from 'react';
-import type { Reminder } from '../types.js';
 import CalendarIcon from './icons/CalendarIcon.jsx';
 
-interface UpcomingFocusProps {
-  reminders: Reminder[];
-}
-
-const UpcomingFocus: React.FC<UpcomingFocusProps> = ({ reminders }) => {
+const UpcomingFocus = ({ reminders }) => {
   const nextReminder = reminders.length > 0 ? reminders[0] : null;
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString) => {
     const date = new Date(dateString + 'T00:00:00'); // Ensure local timezone
     return date.toLocaleDateString('es-ES', {
       weekday: 'long',

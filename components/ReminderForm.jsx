@@ -2,10 +2,6 @@ import React, { useState, useRef } from 'react';
 import PlayIcon from './icons/PlayIcon.jsx';
 import UploadIcon from './icons/UploadIcon.jsx';
 
-interface ReminderFormProps {
-  addReminder: (text: string, dueDate: string, sound: string) => void;
-}
-
 const SOUND_OPTIONS = [
   { name: 'Campana', url: 'https://cdn.freesound.org/previews/270/270318_5123851-lq.mp3' },
   { name: 'Gota de Agua', url: 'https://cdn.freesound.org/previews/415/415763_6142149-lq.mp3' },
@@ -13,14 +9,14 @@ const SOUND_OPTIONS = [
   { name: 'Alarma Digital', url: 'https://cdn.freesound.org/previews/198/198841_3799655-lq.mp3' },
 ];
 
-const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
+const ReminderForm = ({ addReminder }) => {
   const [text, setText] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [customSounds, setCustomSounds] = useState<{ name: string; url: string; }[]>([]);
+  const [customSounds, setCustomSounds] = useState([]);
   const [selectedSound, setSelectedSound] = useState(SOUND_OPTIONS[0].url);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -32,7 +28,7 @@ const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
 
     const reader = new FileReader();
     reader.onload = (event) => {
-      const dataUrl = event.target?.result as string;
+      const dataUrl = event.target?.result;
       const newCustomSound = { name: file.name, url: dataUrl };
       
       setCustomSounds(prev => {
@@ -46,7 +42,7 @@ const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
   };
 
 
-  const handlePreviewSound = (soundUrl: string) => {
+  const handlePreviewSound = (soundUrl) => {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
@@ -55,7 +51,7 @@ const ReminderForm: React.FC<ReminderFormProps> = ({ addReminder }) => {
     audioRef.current.play().catch(e => console.error("Error playing sound preview:", e));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim() && dueDate) {
       addReminder(text, dueDate, selectedSound);

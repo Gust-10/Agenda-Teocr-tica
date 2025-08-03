@@ -1,15 +1,8 @@
-
 import React from 'react';
 import AnimatedLogo from './AnimatedLogo.jsx';
 import DownloadIcon from './icons/DownloadIcon.jsx';
-import type { BeforeInstallPromptEvent } from '../types.js';
 
-interface HeaderProps {
-  installPrompt: BeforeInstallPromptEvent | null;
-  handleInstallClick: () => void;
-}
-
-const Header = ({ installPrompt, handleInstallClick }: HeaderProps) => (
+const Header = ({ installPrompt, handleInstallClick }) => (
   <header className="relative text-center p-4 md:p-6">
     <div className="flex flex-col items-center justify-center">
       <AnimatedLogo />

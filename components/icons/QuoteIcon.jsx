@@ -1,7 +1,6 @@
-
 import React from 'react';
 
-const QuoteIcon = ({ className }: { className?: string }) => (
+const QuoteIcon = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     className={`h-6 w-6 ${className}`}

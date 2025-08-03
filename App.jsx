@@ -6,15 +6,14 @@ import NotificationPopup from './components/NotificationPopup.jsx';
 import UpcomingFocus from './components/UpcomingFocus.jsx';
 import { useReminders } from './hooks/useReminders.js';
 import { usePWAInstall } from './hooks/usePWAInstall.js';
-import type { Notification } from './types.js';
 
-const App: React.FC = () => {
+const App = () => {
   const { reminders, addReminder, deleteReminder, updateReminderNotified } = useReminders();
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState([]);
   const { installPrompt, handleInstallClick } = usePWAInstall();
 
-  const triggerNotification = useCallback((message: string, soundUrl: string) => {
-    const newNotification: Notification = { id: crypto.randomUUID(), message };
+  const triggerNotification = useCallback((message, soundUrl) => {
+    const newNotification = { id: crypto.randomUUID(), message };
     setNotifications(prev => [...prev, newNotification]);
     new Audio(soundUrl).play().catch(e => console.error("Error playing sound:", e));
   }, []);
@@ -55,7 +54,7 @@ const App: React.FC = () => {
     };
   }, [checkReminders]);
 
-  const closeNotification = (id: string) => {
+  const closeNotification = (id) => {
     setNotifications(prev => prev.filter(n => n.id !== id));
   };
 

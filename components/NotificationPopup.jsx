@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import BellIcon from './icons/BellIcon.jsx';
-import type { Notification } from '../types.js';
 
-interface NotificationPopupProps {
-  notification: Notification | null;
-  onClose: (id: string) => void;
-}
-
-const NotificationPopup: React.FC<NotificationPopupProps> = ({ notification, onClose }) => {
+const NotificationPopup = ({ notification, onClose }) => {
   useEffect(() => {
     if (notification) {
       const timer = setTimeout(() => {
